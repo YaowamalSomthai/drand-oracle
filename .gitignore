@@ -1,0 +1,23 @@
+# Foundry
+# Compiler files
+cache/
+out/
+
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Docs
+docs/
+
+# Dotenv file
+.env
+
+# Typescript
+node_modules/
+dist/
+.env
+*.log
+coverage/
+.DS_Store
