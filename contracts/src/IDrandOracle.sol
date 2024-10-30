@@ -10,9 +10,21 @@ interface IDrandOracle {
     /// @param signature The drand round signature
     struct Random {
         uint64 round;
+        uint64 timestamp;
         bytes32 randomness;
         bytes signature;
     }
+
+    /// @notice Thrown when an address parameter is zero
+    error InvalidAddress();
+    /// @notice Thrown when a signature verification fails
+    error InvalidSignature();
+    /// @notice Thrown when accessing or setting an invalid round
+    error InvalidRound();
+    /// @notice Thrown when accessing or setting an invalid round timestamp
+    error InvalidRoundTimestamp();
+    /// @notice Thrown when input parameters are invalid or empty
+    error InvalidInput();
 
     /// @notice Emitted when the signer address is updated
     /// @param signer The new signer address
@@ -34,10 +46,10 @@ interface IDrandOracle {
     /// @return The Random struct containing the round's data
     function getRandomnessFromRound(uint64 _round) external view returns (Random memory);
 
-    /// @notice Retrieves just the randomness value for a specific round
-    /// @param _round The round number to query
-    /// @return The randomness value for the round
-    function getRandomnessValueFromRound(uint64 _round) external view returns (bytes32);
+    /// @notice Retrieves the complete randomness data for a specific timestamp
+    /// @param _timestamp The timestamp to query
+    /// @return The Random struct containing the timestamp's data
+    function getRandomnessFromTimestamp(uint64 _timestamp) external view returns (Random memory);
 
     /// @notice Returns the latest round number that has been recorded
     /// @return The current latest round number

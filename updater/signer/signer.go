@@ -33,12 +33,13 @@ func (s *Signer) Address() common.Address {
 	return crypto.PubkeyToAddress(s.privateKey.PublicKey)
 }
 
-func (s *Signer) SignSetRandomness(round uint64, randomness [32]byte, signature []byte) ([]byte, error) {
+func (s *Signer) SignSetRandomness(round uint64, timestamp uint64, randomness [32]byte, signature []byte) ([]byte, error) {
 	typeData := &apitypes.TypedData{
 		Types: apitypes.Types{
-			// SetRandomness(uint64 round,bytes32 randomness,bytes signature)
+			// SetRandomness(uint64 round,uint64 timestamp,bytes32 randomness,bytes signature)
 			"SetRandomness": []apitypes.Type{
 				{Name: "round", Type: "uint64"},
+				{Name: "timestamp", Type: "uint64"},
 				{Name: "randomness", Type: "bytes32"},
 				{Name: "signature", Type: "bytes"},
 			},
@@ -58,6 +59,7 @@ func (s *Signer) SignSetRandomness(round uint64, randomness [32]byte, signature 
 		},
 		Message: apitypes.TypedDataMessage{
 			"round":      math.NewHexOrDecimal256(int64(round)),
+			"timestamp":  math.NewHexOrDecimal256(int64(timestamp)),
 			"randomness": randomness,
 			"signature":  signature,
 		},

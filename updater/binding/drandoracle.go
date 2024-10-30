@@ -32,13 +32,14 @@ var (
 // IDrandOracleRandom is an auto generated low-level Go binding around an user-defined struct.
 type IDrandOracleRandom struct {
 	Round      uint64
+	Timestamp  uint64
 	Randomness [32]byte
 	Signature  []byte
 }
 
 // BindingMetaData contains all meta data concerning the Binding contract.
 var BindingMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"_initialOwner\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_initialSigner\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"acceptOwnership\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"earliestRound\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"eip712Domain\",\"inputs\":[],\"outputs\":[{\"name\":\"fields\",\"type\":\"bytes1\",\"internalType\":\"bytes1\"},{\"name\":\"name\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"version\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"salt\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"extensions\",\"type\":\"uint256[]\",\"internalType\":\"uint256[]\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getRandomnessFromRound\",\"inputs\":[{\"name\":\"_round\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structIDrandOracle.Random\",\"components\":[{\"name\":\"round\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"randomness\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}]}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getRandomnessValueFromRound\",\"inputs\":[{\"name\":\"_round\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"latestRound\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"owner\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"pause\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"paused\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"pendingOwner\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"renounceOwnership\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setRandomness\",\"inputs\":[{\"name\":\"_random\",\"type\":\"tuple\",\"internalType\":\"structIDrandOracle.Random\",\"components\":[{\"name\":\"round\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"randomness\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}]},{\"name\":\"_signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setSigner\",\"inputs\":[{\"name\":\"_newSigner\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"signer\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"transferOwnership\",\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"unpause\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"values\",\"inputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"outputs\":[{\"name\":\"round\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"randomness\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"EIP712DomainChanged\",\"inputs\":[],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OwnershipTransferStarted\",\"inputs\":[{\"name\":\"previousOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"newOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OwnershipTransferred\",\"inputs\":[{\"name\":\"previousOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"newOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Paused\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"RandomnessUpdated\",\"inputs\":[{\"name\":\"round\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"randomness\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\",\"indexed\":false,\"internalType\":\"bytes\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"SignerUpdated\",\"inputs\":[{\"name\":\"signer\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Unpaused\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"ECDSAInvalidSignature\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ECDSAInvalidSignatureLength\",\"inputs\":[{\"name\":\"length\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"type\":\"error\",\"name\":\"ECDSAInvalidSignatureS\",\"inputs\":[{\"name\":\"s\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}]},{\"type\":\"error\",\"name\":\"EnforcedPause\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ExpectedPause\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidAddress\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidInput\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidRound\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidShortString\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidSignature\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"OwnableInvalidOwner\",\"inputs\":[{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"OwnableUnauthorizedAccount\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"StringTooLong\",\"inputs\":[{\"name\":\"str\",\"type\":\"string\",\"internalType\":\"string\"}]}]",
+	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"_initialOwner\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_initialSigner\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_chainHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"CHAIN_HASH\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"acceptOwnership\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"earliestRound\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"eip712Domain\",\"inputs\":[],\"outputs\":[{\"name\":\"fields\",\"type\":\"bytes1\",\"internalType\":\"bytes1\"},{\"name\":\"name\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"version\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"salt\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"extensions\",\"type\":\"uint256[]\",\"internalType\":\"uint256[]\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getRandomnessFromRound\",\"inputs\":[{\"name\":\"_round\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structIDrandOracle.Random\",\"components\":[{\"name\":\"round\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"timestamp\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"randomness\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}]}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getRandomnessFromTimestamp\",\"inputs\":[{\"name\":\"_timestamp\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structIDrandOracle.Random\",\"components\":[{\"name\":\"round\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"timestamp\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"randomness\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}]}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"latestRound\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"owner\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"pause\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"paused\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"pendingOwner\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"renounceOwnership\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"rounds\",\"inputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"outputs\":[{\"name\":\"round\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"timestamp\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"randomness\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"setRandomness\",\"inputs\":[{\"name\":\"_random\",\"type\":\"tuple\",\"internalType\":\"structIDrandOracle.Random\",\"components\":[{\"name\":\"round\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"timestamp\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"randomness\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}]},{\"name\":\"_signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setSigner\",\"inputs\":[{\"name\":\"_newSigner\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"_signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"signer\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"timestamps\",\"inputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"outputs\":[{\"name\":\"round\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"timestamp\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"randomness\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"transferOwnership\",\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"unpause\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"event\",\"name\":\"EIP712DomainChanged\",\"inputs\":[],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OwnershipTransferStarted\",\"inputs\":[{\"name\":\"previousOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"newOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OwnershipTransferred\",\"inputs\":[{\"name\":\"previousOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"newOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Paused\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"RandomnessUpdated\",\"inputs\":[{\"name\":\"round\",\"type\":\"uint64\",\"indexed\":false,\"internalType\":\"uint64\"},{\"name\":\"randomness\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"},{\"name\":\"signature\",\"type\":\"bytes\",\"indexed\":false,\"internalType\":\"bytes\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"SignerUpdated\",\"inputs\":[{\"name\":\"signer\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Unpaused\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"ECDSAInvalidSignature\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ECDSAInvalidSignatureLength\",\"inputs\":[{\"name\":\"length\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"type\":\"error\",\"name\":\"ECDSAInvalidSignatureS\",\"inputs\":[{\"name\":\"s\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}]},{\"type\":\"error\",\"name\":\"EnforcedPause\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ExpectedPause\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidAddress\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidInput\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidRound\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidShortString\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidSignature\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NoRandomnessFound\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"OwnableInvalidOwner\",\"inputs\":[{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"OwnableUnauthorizedAccount\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"StringTooLong\",\"inputs\":[{\"name\":\"str\",\"type\":\"string\",\"internalType\":\"string\"}]}]",
 }
 
 // BindingABI is the input ABI used to generate the binding from.
@@ -187,6 +188,37 @@ func (_Binding *BindingTransactorRaw) Transact(opts *bind.TransactOpts, method s
 	return _Binding.Contract.contract.Transact(opts, method, params...)
 }
 
+// CHAINHASH is a free data retrieval call binding the contract method 0x9acbc4ca.
+//
+// Solidity: function CHAIN_HASH() view returns(bytes32)
+func (_Binding *BindingCaller) CHAINHASH(opts *bind.CallOpts) ([32]byte, error) {
+	var out []interface{}
+	err := _Binding.contract.Call(opts, &out, "CHAIN_HASH")
+
+	if err != nil {
+		return *new([32]byte), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
+
+	return out0, err
+
+}
+
+// CHAINHASH is a free data retrieval call binding the contract method 0x9acbc4ca.
+//
+// Solidity: function CHAIN_HASH() view returns(bytes32)
+func (_Binding *BindingSession) CHAINHASH() ([32]byte, error) {
+	return _Binding.Contract.CHAINHASH(&_Binding.CallOpts)
+}
+
+// CHAINHASH is a free data retrieval call binding the contract method 0x9acbc4ca.
+//
+// Solidity: function CHAIN_HASH() view returns(bytes32)
+func (_Binding *BindingCallerSession) CHAINHASH() ([32]byte, error) {
+	return _Binding.Contract.CHAINHASH(&_Binding.CallOpts)
+}
+
 // EarliestRound is a free data retrieval call binding the contract method 0x67eb66cb.
 //
 // Solidity: function earliestRound() view returns(uint64)
@@ -290,7 +322,7 @@ func (_Binding *BindingCallerSession) Eip712Domain() (struct {
 
 // GetRandomnessFromRound is a free data retrieval call binding the contract method 0xfc4f57c5.
 //
-// Solidity: function getRandomnessFromRound(uint64 _round) view returns((uint64,bytes32,bytes))
+// Solidity: function getRandomnessFromRound(uint64 _round) view returns((uint64,uint64,bytes32,bytes))
 func (_Binding *BindingCaller) GetRandomnessFromRound(opts *bind.CallOpts, _round uint64) (IDrandOracleRandom, error) {
 	var out []interface{}
 	err := _Binding.contract.Call(opts, &out, "getRandomnessFromRound", _round)
@@ -307,47 +339,47 @@ func (_Binding *BindingCaller) GetRandomnessFromRound(opts *bind.CallOpts, _roun
 
 // GetRandomnessFromRound is a free data retrieval call binding the contract method 0xfc4f57c5.
 //
-// Solidity: function getRandomnessFromRound(uint64 _round) view returns((uint64,bytes32,bytes))
+// Solidity: function getRandomnessFromRound(uint64 _round) view returns((uint64,uint64,bytes32,bytes))
 func (_Binding *BindingSession) GetRandomnessFromRound(_round uint64) (IDrandOracleRandom, error) {
 	return _Binding.Contract.GetRandomnessFromRound(&_Binding.CallOpts, _round)
 }
 
 // GetRandomnessFromRound is a free data retrieval call binding the contract method 0xfc4f57c5.
 //
-// Solidity: function getRandomnessFromRound(uint64 _round) view returns((uint64,bytes32,bytes))
+// Solidity: function getRandomnessFromRound(uint64 _round) view returns((uint64,uint64,bytes32,bytes))
 func (_Binding *BindingCallerSession) GetRandomnessFromRound(_round uint64) (IDrandOracleRandom, error) {
 	return _Binding.Contract.GetRandomnessFromRound(&_Binding.CallOpts, _round)
 }
 
-// GetRandomnessValueFromRound is a free data retrieval call binding the contract method 0x21e50575.
+// GetRandomnessFromTimestamp is a free data retrieval call binding the contract method 0x167ef5fb.
 //
-// Solidity: function getRandomnessValueFromRound(uint64 _round) view returns(bytes32)
-func (_Binding *BindingCaller) GetRandomnessValueFromRound(opts *bind.CallOpts, _round uint64) ([32]byte, error) {
+// Solidity: function getRandomnessFromTimestamp(uint64 _timestamp) view returns((uint64,uint64,bytes32,bytes))
+func (_Binding *BindingCaller) GetRandomnessFromTimestamp(opts *bind.CallOpts, _timestamp uint64) (IDrandOracleRandom, error) {
 	var out []interface{}
-	err := _Binding.contract.Call(opts, &out, "getRandomnessValueFromRound", _round)
+	err := _Binding.contract.Call(opts, &out, "getRandomnessFromTimestamp", _timestamp)
 
 	if err != nil {
-		return *new([32]byte), err
+		return *new(IDrandOracleRandom), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
+	out0 := *abi.ConvertType(out[0], new(IDrandOracleRandom)).(*IDrandOracleRandom)
 
 	return out0, err
 
 }
 
-// GetRandomnessValueFromRound is a free data retrieval call binding the contract method 0x21e50575.
+// GetRandomnessFromTimestamp is a free data retrieval call binding the contract method 0x167ef5fb.
 //
-// Solidity: function getRandomnessValueFromRound(uint64 _round) view returns(bytes32)
-func (_Binding *BindingSession) GetRandomnessValueFromRound(_round uint64) ([32]byte, error) {
-	return _Binding.Contract.GetRandomnessValueFromRound(&_Binding.CallOpts, _round)
+// Solidity: function getRandomnessFromTimestamp(uint64 _timestamp) view returns((uint64,uint64,bytes32,bytes))
+func (_Binding *BindingSession) GetRandomnessFromTimestamp(_timestamp uint64) (IDrandOracleRandom, error) {
+	return _Binding.Contract.GetRandomnessFromTimestamp(&_Binding.CallOpts, _timestamp)
 }
 
-// GetRandomnessValueFromRound is a free data retrieval call binding the contract method 0x21e50575.
+// GetRandomnessFromTimestamp is a free data retrieval call binding the contract method 0x167ef5fb.
 //
-// Solidity: function getRandomnessValueFromRound(uint64 _round) view returns(bytes32)
-func (_Binding *BindingCallerSession) GetRandomnessValueFromRound(_round uint64) ([32]byte, error) {
-	return _Binding.Contract.GetRandomnessValueFromRound(&_Binding.CallOpts, _round)
+// Solidity: function getRandomnessFromTimestamp(uint64 _timestamp) view returns((uint64,uint64,bytes32,bytes))
+func (_Binding *BindingCallerSession) GetRandomnessFromTimestamp(_timestamp uint64) (IDrandOracleRandom, error) {
+	return _Binding.Contract.GetRandomnessFromTimestamp(&_Binding.CallOpts, _timestamp)
 }
 
 // LatestRound is a free data retrieval call binding the contract method 0x668a0f02.
@@ -474,6 +506,61 @@ func (_Binding *BindingCallerSession) PendingOwner() (common.Address, error) {
 	return _Binding.Contract.PendingOwner(&_Binding.CallOpts)
 }
 
+// Rounds is a free data retrieval call binding the contract method 0xbc3ac875.
+//
+// Solidity: function rounds(uint64 ) view returns(uint64 round, uint64 timestamp, bytes32 randomness, bytes signature)
+func (_Binding *BindingCaller) Rounds(opts *bind.CallOpts, arg0 uint64) (struct {
+	Round      uint64
+	Timestamp  uint64
+	Randomness [32]byte
+	Signature  []byte
+}, error) {
+	var out []interface{}
+	err := _Binding.contract.Call(opts, &out, "rounds", arg0)
+
+	outstruct := new(struct {
+		Round      uint64
+		Timestamp  uint64
+		Randomness [32]byte
+		Signature  []byte
+	})
+	if err != nil {
+		return *outstruct, err
+	}
+
+	outstruct.Round = *abi.ConvertType(out[0], new(uint64)).(*uint64)
+	outstruct.Timestamp = *abi.ConvertType(out[1], new(uint64)).(*uint64)
+	outstruct.Randomness = *abi.ConvertType(out[2], new([32]byte)).(*[32]byte)
+	outstruct.Signature = *abi.ConvertType(out[3], new([]byte)).(*[]byte)
+
+	return *outstruct, err
+
+}
+
+// Rounds is a free data retrieval call binding the contract method 0xbc3ac875.
+//
+// Solidity: function rounds(uint64 ) view returns(uint64 round, uint64 timestamp, bytes32 randomness, bytes signature)
+func (_Binding *BindingSession) Rounds(arg0 uint64) (struct {
+	Round      uint64
+	Timestamp  uint64
+	Randomness [32]byte
+	Signature  []byte
+}, error) {
+	return _Binding.Contract.Rounds(&_Binding.CallOpts, arg0)
+}
+
+// Rounds is a free data retrieval call binding the contract method 0xbc3ac875.
+//
+// Solidity: function rounds(uint64 ) view returns(uint64 round, uint64 timestamp, bytes32 randomness, bytes signature)
+func (_Binding *BindingCallerSession) Rounds(arg0 uint64) (struct {
+	Round      uint64
+	Timestamp  uint64
+	Randomness [32]byte
+	Signature  []byte
+}, error) {
+	return _Binding.Contract.Rounds(&_Binding.CallOpts, arg0)
+}
+
 // Signer is a free data retrieval call binding the contract method 0x238ac933.
 //
 // Solidity: function signer() view returns(address)
@@ -505,19 +592,21 @@ func (_Binding *BindingCallerSession) Signer() (common.Address, error) {
 	return _Binding.Contract.Signer(&_Binding.CallOpts)
 }
 
-// Values is a free data retrieval call binding the contract method 0xebcaf092.
+// Timestamps is a free data retrieval call binding the contract method 0xdeaf3ba6.
 //
-// Solidity: function values(uint64 ) view returns(uint64 round, bytes32 randomness, bytes signature)
-func (_Binding *BindingCaller) Values(opts *bind.CallOpts, arg0 uint64) (struct {
+// Solidity: function timestamps(uint64 ) view returns(uint64 round, uint64 timestamp, bytes32 randomness, bytes signature)
+func (_Binding *BindingCaller) Timestamps(opts *bind.CallOpts, arg0 uint64) (struct {
 	Round      uint64
+	Timestamp  uint64
 	Randomness [32]byte
 	Signature  []byte
 }, error) {
 	var out []interface{}
-	err := _Binding.contract.Call(opts, &out, "values", arg0)
+	err := _Binding.contract.Call(opts, &out, "timestamps", arg0)
 
 	outstruct := new(struct {
 		Round      uint64
+		Timestamp  uint64
 		Randomness [32]byte
 		Signature  []byte
 	})
@@ -526,33 +615,36 @@ func (_Binding *BindingCaller) Values(opts *bind.CallOpts, arg0 uint64) (struct 
 	}
 
 	outstruct.Round = *abi.ConvertType(out[0], new(uint64)).(*uint64)
-	outstruct.Randomness = *abi.ConvertType(out[1], new([32]byte)).(*[32]byte)
-	outstruct.Signature = *abi.ConvertType(out[2], new([]byte)).(*[]byte)
+	outstruct.Timestamp = *abi.ConvertType(out[1], new(uint64)).(*uint64)
+	outstruct.Randomness = *abi.ConvertType(out[2], new([32]byte)).(*[32]byte)
+	outstruct.Signature = *abi.ConvertType(out[3], new([]byte)).(*[]byte)
 
 	return *outstruct, err
 
 }
 
-// Values is a free data retrieval call binding the contract method 0xebcaf092.
+// Timestamps is a free data retrieval call binding the contract method 0xdeaf3ba6.
 //
-// Solidity: function values(uint64 ) view returns(uint64 round, bytes32 randomness, bytes signature)
-func (_Binding *BindingSession) Values(arg0 uint64) (struct {
+// Solidity: function timestamps(uint64 ) view returns(uint64 round, uint64 timestamp, bytes32 randomness, bytes signature)
+func (_Binding *BindingSession) Timestamps(arg0 uint64) (struct {
 	Round      uint64
+	Timestamp  uint64
 	Randomness [32]byte
 	Signature  []byte
 }, error) {
-	return _Binding.Contract.Values(&_Binding.CallOpts, arg0)
+	return _Binding.Contract.Timestamps(&_Binding.CallOpts, arg0)
 }
 
-// Values is a free data retrieval call binding the contract method 0xebcaf092.
+// Timestamps is a free data retrieval call binding the contract method 0xdeaf3ba6.
 //
-// Solidity: function values(uint64 ) view returns(uint64 round, bytes32 randomness, bytes signature)
-func (_Binding *BindingCallerSession) Values(arg0 uint64) (struct {
+// Solidity: function timestamps(uint64 ) view returns(uint64 round, uint64 timestamp, bytes32 randomness, bytes signature)
+func (_Binding *BindingCallerSession) Timestamps(arg0 uint64) (struct {
 	Round      uint64
+	Timestamp  uint64
 	Randomness [32]byte
 	Signature  []byte
 }, error) {
-	return _Binding.Contract.Values(&_Binding.CallOpts, arg0)
+	return _Binding.Contract.Timestamps(&_Binding.CallOpts, arg0)
 }
 
 // AcceptOwnership is a paid mutator transaction binding the contract method 0x79ba5097.
@@ -618,23 +710,23 @@ func (_Binding *BindingTransactorSession) RenounceOwnership() (*types.Transactio
 	return _Binding.Contract.RenounceOwnership(&_Binding.TransactOpts)
 }
 
-// SetRandomness is a paid mutator transaction binding the contract method 0x639caffc.
+// SetRandomness is a paid mutator transaction binding the contract method 0x2e1f8309.
 //
-// Solidity: function setRandomness((uint64,bytes32,bytes) _random, bytes _signature) returns()
+// Solidity: function setRandomness((uint64,uint64,bytes32,bytes) _random, bytes _signature) returns()
 func (_Binding *BindingTransactor) SetRandomness(opts *bind.TransactOpts, _random IDrandOracleRandom, _signature []byte) (*types.Transaction, error) {
 	return _Binding.contract.Transact(opts, "setRandomness", _random, _signature)
 }
 
-// SetRandomness is a paid mutator transaction binding the contract method 0x639caffc.
+// SetRandomness is a paid mutator transaction binding the contract method 0x2e1f8309.
 //
-// Solidity: function setRandomness((uint64,bytes32,bytes) _random, bytes _signature) returns()
+// Solidity: function setRandomness((uint64,uint64,bytes32,bytes) _random, bytes _signature) returns()
 func (_Binding *BindingSession) SetRandomness(_random IDrandOracleRandom, _signature []byte) (*types.Transaction, error) {
 	return _Binding.Contract.SetRandomness(&_Binding.TransactOpts, _random, _signature)
 }
 
-// SetRandomness is a paid mutator transaction binding the contract method 0x639caffc.
+// SetRandomness is a paid mutator transaction binding the contract method 0x2e1f8309.
 //
-// Solidity: function setRandomness((uint64,bytes32,bytes) _random, bytes _signature) returns()
+// Solidity: function setRandomness((uint64,uint64,bytes32,bytes) _random, bytes _signature) returns()
 func (_Binding *BindingTransactorSession) SetRandomness(_random IDrandOracleRandom, _signature []byte) (*types.Transaction, error) {
 	return _Binding.Contract.SetRandomness(&_Binding.TransactOpts, _random, _signature)
 }
@@ -1344,15 +1436,15 @@ func (it *BindingRandomnessUpdatedIterator) Close() error {
 
 // BindingRandomnessUpdated represents a RandomnessUpdated event raised by the Binding contract.
 type BindingRandomnessUpdated struct {
-	Round      *big.Int
+	Round      uint64
 	Randomness [32]byte
 	Signature  []byte
 	Raw        types.Log // Blockchain specific contextual infos
 }
 
-// FilterRandomnessUpdated is a free log retrieval operation binding the contract event 0x537d9ca6055b04781fb84f7674dc4752e011c410ac4110569e36d814a2a31fb2.
+// FilterRandomnessUpdated is a free log retrieval operation binding the contract event 0xb2f2d8fc12d36205a87db37f52aa7754f67d078758e4c76ef43c0a420b399724.
 //
-// Solidity: event RandomnessUpdated(uint256 round, bytes32 randomness, bytes signature)
+// Solidity: event RandomnessUpdated(uint64 round, bytes32 randomness, bytes signature)
 func (_Binding *BindingFilterer) FilterRandomnessUpdated(opts *bind.FilterOpts) (*BindingRandomnessUpdatedIterator, error) {
 
 	logs, sub, err := _Binding.contract.FilterLogs(opts, "RandomnessUpdated")
@@ -1362,9 +1454,9 @@ func (_Binding *BindingFilterer) FilterRandomnessUpdated(opts *bind.FilterOpts) 
 	return &BindingRandomnessUpdatedIterator{contract: _Binding.contract, event: "RandomnessUpdated", logs: logs, sub: sub}, nil
 }
 
-// WatchRandomnessUpdated is a free log subscription operation binding the contract event 0x537d9ca6055b04781fb84f7674dc4752e011c410ac4110569e36d814a2a31fb2.
+// WatchRandomnessUpdated is a free log subscription operation binding the contract event 0xb2f2d8fc12d36205a87db37f52aa7754f67d078758e4c76ef43c0a420b399724.
 //
-// Solidity: event RandomnessUpdated(uint256 round, bytes32 randomness, bytes signature)
+// Solidity: event RandomnessUpdated(uint64 round, bytes32 randomness, bytes signature)
 func (_Binding *BindingFilterer) WatchRandomnessUpdated(opts *bind.WatchOpts, sink chan<- *BindingRandomnessUpdated) (event.Subscription, error) {
 
 	logs, sub, err := _Binding.contract.WatchLogs(opts, "RandomnessUpdated")
@@ -1399,9 +1491,9 @@ func (_Binding *BindingFilterer) WatchRandomnessUpdated(opts *bind.WatchOpts, si
 	}), nil
 }
 
-// ParseRandomnessUpdated is a log parse operation binding the contract event 0x537d9ca6055b04781fb84f7674dc4752e011c410ac4110569e36d814a2a31fb2.
+// ParseRandomnessUpdated is a log parse operation binding the contract event 0xb2f2d8fc12d36205a87db37f52aa7754f67d078758e4c76ef43c0a420b399724.
 //
-// Solidity: event RandomnessUpdated(uint256 round, bytes32 randomness, bytes signature)
+// Solidity: event RandomnessUpdated(uint64 round, bytes32 randomness, bytes signature)
 func (_Binding *BindingFilterer) ParseRandomnessUpdated(log types.Log) (*BindingRandomnessUpdated, error) {
 	event := new(BindingRandomnessUpdated)
 	if err := _Binding.contract.UnpackLog(event, "RandomnessUpdated", log); err != nil {

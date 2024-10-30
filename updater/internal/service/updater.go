@@ -1,6 +1,7 @@
 package service
 
 import (
+	"bytes"
 	"context"
 	"drand-oracle-updater/binding"
 	"drand-oracle-updater/sender"
@@ -9,10 +10,12 @@ import (
 	"errors"
 	"math/big"
 	"sync"
+	"time"
 
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 
+	"github.com/drand/drand/chain"
 	"github.com/drand/drand/client"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/rs/zerolog/log"
@@ -22,6 +25,9 @@ import (
 type Updater struct {
 	// drandClient is the Drand HTTP client
 	drandClient client.Client
+
+	// drandInfo is the Drand info
+	drandInfo *chain.Info
 
 	// rpcClient is the Ethereum RPC client
 	rpcClient *ethclient.Client
@@ -105,6 +111,23 @@ func (u *Updater) Start(ctx context.Context) error {
 	u.latestDrandRoundMutex.Unlock()
 	log.Info().Msgf("Drand: Latest round: %d", u.latestDrandRound)
 
+	// Get and validate the Drand info against the Oracle contract
+	u.drandInfo, err = u.drandClient.Info(ctx)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get Drand info")
+		return err
+	}
+	chainHash, err := u.binding.CHAINHASH(nil)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get chain hash from Drand Oracle contract")
+		return err
+	}
+	if !bytes.Equal(chainHash[:], u.drandInfo.Hash()) {
+		err = errors.New("chain hash mismatch")
+		return err
+	}
+
+	// Start the updater goroutines
 	errg, ctx := errgroup.WithContext(ctx)
 	errg.Go(func() error {
 		return u.processRounds(ctx)
@@ -120,15 +143,16 @@ func (u *Updater) Start(ctx context.Context) error {
 
 func (u *Updater) catchUp(ctx context.Context) error {
 	for {
-		u.latestDrandRoundMutex.RLock()
+		u.latestDrandRoundMutex.Lock()
 		latestDrandRound := u.latestDrandRound
-		u.latestDrandRoundMutex.RUnlock()
+		u.latestDrandRoundMutex.Unlock()
 
-		u.latestOracleRoundMutex.RLock()
+		u.latestOracleRoundMutex.Lock()
 		latestOracleRound := u.latestOracleRound
-		u.latestOracleRoundMutex.RUnlock()
+		u.latestOracleRoundMutex.Unlock()
 
-		if latestDrandRound == latestOracleRound+1 {
+		if latestDrandRound == latestOracleRound {
+			log.Info().Msg("Caught up, exiting catch up goroutine")
 			break
 		}
 
@@ -199,13 +223,16 @@ func (u *Updater) processRound(
 		return nil
 	}
 
+	roundTimestamp := uint64(u.drandInfo.GenesisTime) + uint64(round-1)*uint64(u.drandInfo.Period.Seconds())
+
 	log.Info().
 		Uint64("round", round).
+		Time("timestamp", time.Unix(int64(roundTimestamp), 0)).
 		Str("randomness", hex.EncodeToString(randomness)).
 		Str("signature", hex.EncodeToString(signature)).
 		Msg("Processing round")
 
-	eip712Signature, err := u.signer.SignSetRandomness(round, [32]byte(randomness), signature)
+	eip712Signature, err := u.signer.SignSetRandomness(round, roundTimestamp, [32]byte(randomness), signature)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to sign set randomness")
 		return err
@@ -220,6 +247,7 @@ func (u *Updater) processRound(
 		},
 		binding.IDrandOracleRandom{
 			Round:      round,
+			Timestamp:  roundTimestamp,
 			Randomness: [32]byte(randomness),
 			Signature:  signature,
 		},
@@ -246,7 +274,7 @@ func (u *Updater) processRound(
 
 // Add a getter method for safe access
 func (u *Updater) GetLatestOracleRound() uint64 {
-	u.latestOracleRoundMutex.RLock()
-	defer u.latestOracleRoundMutex.RUnlock()
+	u.latestOracleRoundMutex.Lock()
+	defer u.latestOracleRoundMutex.Unlock()
 	return u.latestOracleRound
 }

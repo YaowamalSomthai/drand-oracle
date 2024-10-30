@@ -18,6 +18,8 @@ contract DrandOracleTest is Test {
     string constant oracleName = "DrandOracle";
     string constant oracleVersion = "1.0.0";
 
+    bytes32 constant chainHash = bytes32(0x8990e7a9aaed2ffed73dbd7092123d6f289930540d7651336225dc172e51b2ce);
+
     DrandOracle public oracle;
 
     bytes32 internal constant _TYPE_HASH =
@@ -31,7 +33,7 @@ contract DrandOracleTest is Test {
         owner = vm.addr(ownerPrivateKey);
         signer = vm.addr(signerPrivateKey);
 
-        oracle = new DrandOracle{salt: "DrandOracle"}(owner, signer);
+        oracle = new DrandOracle{salt: "DrandOracle"}(owner, signer, chainHash);
 
         bytes32 hashedName = keccak256(bytes(oracleName));
         bytes32 hashedVersion = keccak256(bytes(oracleVersion));
@@ -44,9 +46,14 @@ contract DrandOracleTest is Test {
         bytes32 randomnessBytes = bytes32(hex"a502d9e94fd02472fbd292e054893fb26a37490610a4e6ec29734a20f359b9c5");
         bytes memory signatureBytes =
             hex"b699e3214449474050112c80e01515b3250084e57f7fae9138e0a509aee2a641098450f9a5be3c6485c0fb8e8b3c8581029d1192ec6f9eb8d3a5e307f54ffd512a184562dc7f842d44b09e8481bc4ed38cfbd9c2d5b4e92f97e1baf6e97767c5";
+        uint64 timestamp = 1724995200;
 
-        IDrandOracle.Random memory randomData =
-            IDrandOracle.Random({round: round, randomness: randomnessBytes, signature: signatureBytes});
+        IDrandOracle.Random memory randomData = IDrandOracle.Random({
+            round: round,
+            timestamp: timestamp,
+            randomness: randomnessBytes,
+            signature: signatureBytes
+        });
 
         bytes32 hash = _hashSetRandomness(randomData);
         bytes memory signature = _signMessage(hash, signerPrivateKey);
@@ -57,8 +64,62 @@ contract DrandOracleTest is Test {
         assertEq(retrievedData.round, round);
         assertEq(retrievedData.randomness, randomnessBytes);
         assertEq(retrievedData.signature, signatureBytes);
+        assertEq(retrievedData.timestamp, timestamp);
         assertEq(oracle.earliestRound(), round);
         assertEq(oracle.latestRound(), round);
+    }
+
+    function test_getRandomnessFromTimestamp_success() public {
+        uint64 round = 4493690;
+        bytes32 randomnessBytes = bytes32(hex"a502d9e94fd02472fbd292e054893fb26a37490610a4e6ec29734a20f359b9c5");
+        bytes memory signatureBytes =
+            hex"b699e3214449474050112c80e01515b3250084e57f7fae9138e0a509aee2a641098450f9a5be3c6485c0fb8e8b3c8581029d1192ec6f9eb8d3a5e307f54ffd512a184562dc7f842d44b09e8481bc4ed38cfbd9c2d5b4e92f97e1baf6e97767c5";
+        uint64 timestamp = 1724995200;
+
+        IDrandOracle.Random memory randomData = IDrandOracle.Random({
+            round: round,
+            timestamp: timestamp,
+            randomness: randomnessBytes,
+            signature: signatureBytes
+        });
+
+        bytes32 hash = _hashSetRandomness(randomData);
+        bytes memory signature = _signMessage(hash, signerPrivateKey);
+
+        oracle.setRandomness(randomData, signature);
+
+        uint64 newTimestamp = timestamp + 20;
+
+        IDrandOracle.Random memory retrievedData = oracle.getRandomnessFromTimestamp(newTimestamp);
+        assertEq(retrievedData.round, round);
+        assertEq(retrievedData.randomness, randomnessBytes);
+        assertEq(retrievedData.signature, signatureBytes);
+        assertEq(retrievedData.timestamp, timestamp);
+    }
+
+    function test_getRandomnessFromTimestamp_invalidTimestamp() public {
+        uint64 round = 4493690;
+        bytes32 randomnessBytes = bytes32(hex"a502d9e94fd02472fbd292e054893fb26a37490610a4e6ec29734a20f359b9c5");
+        bytes memory signatureBytes =
+            hex"b699e3214449474050112c80e01515b3250084e57f7fae9138e0a509aee2a641098450f9a5be3c6485c0fb8e8b3c8581029d1192ec6f9eb8d3a5e307f54ffd512a184562dc7f842d44b09e8481bc4ed38cfbd9c2d5b4e92f97e1baf6e97767c5";
+        uint64 timestamp = 1724995200;
+
+        IDrandOracle.Random memory randomData = IDrandOracle.Random({
+            round: round,
+            timestamp: timestamp,
+            randomness: randomnessBytes,
+            signature: signatureBytes
+        });
+
+        bytes32 hash = _hashSetRandomness(randomData);
+        bytes memory signature = _signMessage(hash, signerPrivateKey);
+
+        oracle.setRandomness(randomData, signature);
+
+        uint64 newTimestamp = timestamp - 1;
+
+        vm.expectRevert(abi.encodeWithSelector(IDrandOracle.InvalidRoundTimestamp.selector));
+        oracle.getRandomnessFromTimestamp(newTimestamp);
     }
 
     function _signMessage(bytes32 hash, uint256 privateKey) internal pure returns (bytes memory) {
@@ -71,8 +132,9 @@ contract DrandOracleTest is Test {
         return _hashTypedDataV4(
             keccak256(
                 abi.encode(
-                    keccak256("SetRandomness(uint64 round,bytes32 randomness,bytes signature)"),
+                    keccak256("SetRandomness(uint64 round,uint64 timestamp,bytes32 randomness,bytes signature)"),
                     _random.round,
+                    _random.timestamp,
                     _random.randomness,
                     keccak256(_random.signature)
                 )

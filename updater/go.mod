@@ -5,6 +5,7 @@ go 1.22
 toolchain go1.22.8
 
 require (
+	github.com/davecgh/go-spew v1.1.1
 	github.com/drand/drand v1.5.11
 	github.com/ethereum/go-ethereum v1.14.11
 	github.com/kelseyhightower/envconfig v1.4.0
