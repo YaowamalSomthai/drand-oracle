@@ -9,7 +9,7 @@ interface IDrandOracle {
     /// @param randomness The drand round randomness value
     /// @param signature The drand round signature
     struct Random {
-        uint256 round;
+        uint64 round;
         bytes32 randomness;
         bytes signature;
     }
@@ -22,7 +22,7 @@ interface IDrandOracle {
     /// @param round The drand round number
     /// @param randomness The drand round randomness value
     /// @param signature The drand round signature
-    event RandomnessUpdated(uint256 round, bytes32 randomness, bytes signature);
+    event RandomnessUpdated(uint64 round, bytes32 randomness, bytes signature);
 
     /// @notice Sets new randomness data for the new round
     /// @param _random The drand round randomness result
@@ -32,20 +32,20 @@ interface IDrandOracle {
     /// @notice Retrieves the complete randomness data for a specific round
     /// @param _round The round number to query
     /// @return The Random struct containing the round's data
-    function getRandomnessFromRound(uint256 _round) external view returns (Random memory);
+    function getRandomnessFromRound(uint64 _round) external view returns (Random memory);
 
     /// @notice Retrieves just the randomness value for a specific round
     /// @param _round The round number to query
     /// @return The randomness value for the round
-    function getRandomnessValueFromRound(uint256 _round) external view returns (bytes32);
+    function getRandomnessValueFromRound(uint64 _round) external view returns (bytes32);
 
     /// @notice Returns the latest round number that has been recorded
     /// @return The current latest round number
-    function latestRound() external view returns (uint256);
+    function latestRound() external view returns (uint64);
 
     /// @notice Returns the earliest round number that has been recorded
     /// @return The earliest round number
-    function earliestRound() external view returns (uint256);
+    function earliestRound() external view returns (uint64);
 
     /// @notice Updates the signer address
     /// @param _signer The new signer address

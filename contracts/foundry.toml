@@ -7,3 +7,4 @@ remappings = ["@openzeppelin/=lib/openzeppelin-contracts/"]
 
 [etherscan]
 gravity_testnet = { key = "", chain = "13505", url = "https://explorer-sepolia.gravity.xyz/api" }
+anvil = { key = "", chain = "31337", url = "http://127.0.0.1:8545" }

@@ -39,13 +39,13 @@ contract DrandOracle is IDrandOracle, Ownable2Step, Pausable, EIP712 {
     error InvalidInput();
 
     /// @notice Mapping of round numbers to their corresponding randomness data
-    mapping(uint256 => Random) public values;
+    mapping(uint64 => Random) public values;
 
     /// @notice The earliest round number that has been recorded
-    uint256 private _earliestRound = type(uint256).max;
+    uint64 private _earliestRound = type(uint64).max;
 
     /// @notice The most recent round number that has been recorded
-    uint256 private _latestRound = 0;
+    uint64 private _latestRound = 0;
 
     /// @notice The address authorized to sign randomness updates
     address private _signer;
@@ -71,21 +71,26 @@ contract DrandOracle is IDrandOracle, Ownable2Step, Pausable, EIP712 {
     /// @dev Round must be greater than the latest recorded round
     function setRandomness(Random calldata _random, bytes calldata _signature) external whenNotPaused {
         if (_random.randomness.length == 0 || _random.signature.length == 0) {
-            revert InvalidInput();
+            // revert InvalidInput();
+            revert("InvalidInput");
         }
         if (_random.round == 0) {
-            revert InvalidRound();
+            // revert InvalidRound();
+            revert("InvalidRound");
         }
         if (!_verify(_hashSetRandomness(_random), _signature)) {
-            revert InvalidSignature();
+            // revert InvalidSignature();
+            revert("InvalidSignature");
         }
         if (_latestRound >= _random.round) {
-            revert InvalidRound();
+            // revert InvalidRound();
+            revert("InvalidRound");
         }
         if (_latestRound > 0 && _random.round != _latestRound + 1) {
-            revert InvalidRound();
+            // revert InvalidRound();
+            revert("InvalidRound");
         }
-        if (_earliestRound == type(uint256).max) {
+        if (_earliestRound == type(uint64).max) {
             _earliestRound = _random.round;
         }
         _latestRound = _random.round;
@@ -97,7 +102,7 @@ contract DrandOracle is IDrandOracle, Ownable2Step, Pausable, EIP712 {
     /// @param _round The round number to query
     /// @return The Random struct containing the round's data
     /// @dev Reverts if the round is greater than the latest round
-    function getRandomnessFromRound(uint256 _round) external view returns (Random memory) {
+    function getRandomnessFromRound(uint64 _round) external view returns (Random memory) {
         if (_round > _latestRound || _round < _earliestRound) {
             revert InvalidRound();
         }
@@ -108,7 +113,7 @@ contract DrandOracle is IDrandOracle, Ownable2Step, Pausable, EIP712 {
     /// @param _round The round number to query
     /// @return The randomness value for the round
     /// @dev Reverts if the round is greater than the latest round
-    function getRandomnessValueFromRound(uint256 _round) external view returns (bytes32) {
+    function getRandomnessValueFromRound(uint64 _round) external view returns (bytes32) {
         if (_round > _latestRound || _round < _earliestRound) {
             revert InvalidRound();
         }
@@ -117,13 +122,13 @@ contract DrandOracle is IDrandOracle, Ownable2Step, Pausable, EIP712 {
 
     /// @notice Returns the latest round number that has been recorded
     /// @return The current latest round number
-    function latestRound() external view returns (uint256) {
+    function latestRound() external view returns (uint64) {
         return _latestRound;
     }
 
     /// @notice Returns the earliest round number that has been recorded
     /// @return The earliest round number
-    function earliestRound() external view returns (uint256) {
+    function earliestRound() external view returns (uint64) {
         return _earliestRound;
     }
 
@@ -169,10 +174,10 @@ contract DrandOracle is IDrandOracle, Ownable2Step, Pausable, EIP712 {
         return _hashTypedDataV4(
             keccak256(
                 abi.encode(
-                    keccak256("SetRandomness(uint256 round,bytes32 randomness,bytes signature)"),
+                    keccak256("SetRandomness(uint64 round,bytes32 randomness,bytes signature)"),
                     _random.round,
                     _random.randomness,
-                    _random.signature
+                    keccak256(_random.signature)
                 )
             )
         );
