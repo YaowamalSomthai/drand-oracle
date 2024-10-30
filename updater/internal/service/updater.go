@@ -8,7 +8,6 @@ import (
 	"drand-oracle-updater/signer"
 	"encoding/hex"
 	"errors"
-	"math/big"
 	"sync"
 	"time"
 
@@ -20,6 +19,10 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/sync/errgroup"
+)
+
+const (
+	setRandomnessGasLimit = 500000 // 500,000 should be more than enough for a setRandomness transaction
 )
 
 type Updater struct {
@@ -183,7 +186,9 @@ func (u *Updater) catchUp(ctx context.Context) error {
 
 func (u *Updater) watchNewRounds(ctx context.Context) error {
 	for result := range u.drandClient.Watch(ctx) {
-		log.Info().Msgf("Drand: New round: %d", result.Round())
+		u.latestDrandRoundMutex.Lock()
+		u.latestDrandRound = result.Round()
+		u.latestDrandRoundMutex.Unlock()
 		u.roundChan <- &roundData{
 			round:      result.Round(),
 			randomness: result.Randomness(),
@@ -238,12 +243,19 @@ func (u *Updater) processRound(
 		return err
 	}
 
+	// Get current gas price suggestion from the network
+	gasPrice, err := u.rpcClient.SuggestGasPrice(ctx)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to get suggested gas price")
+		return err
+	}
+
 	tx, err := u.binding.SetRandomness(
 		&bind.TransactOpts{
 			From:     u.sender.Address(),
 			Signer:   u.sender.SignerFn(),
-			GasLimit: 1000000,                // TODO: estimate gas
-			GasPrice: big.NewInt(1000000000), // TODO: estimate gas price
+			GasLimit: setRandomnessGasLimit,
+			GasPrice: gasPrice,
 		},
 		binding.IDrandOracleRandom{
 			Round:      round,

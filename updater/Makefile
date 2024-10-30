@@ -7,6 +7,15 @@ ANVIL_CHAIN_ID=31337
 build:
 	go build -o updater ./cmd/main.go
 
+.PHONY: lint lint-fix
+lint:
+	@echo "--> Running linter"
+	@golangci-lint run
+
+lint-fix:
+	@echo "--> Running linter auto fix"
+	@golangci-lint run --fix
+
 # Run updater locally
 local-run-anvil:
 	@echo "⚠️  WARNING: Please ensure that:"
