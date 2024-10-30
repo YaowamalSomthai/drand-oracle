@@ -88,9 +88,20 @@ contract DrandOracleTest is Test {
 
         oracle.setRandomness(randomData, signature);
 
+        // Test getting the randomness from a timestamp that is close to the set randomness timestamp
         uint64 newTimestamp = timestamp + 20;
 
         IDrandOracle.Random memory retrievedData = oracle.getRandomnessFromTimestamp(newTimestamp);
+        assertEq(retrievedData.round, round);
+        assertEq(retrievedData.randomness, randomnessBytes);
+        assertEq(retrievedData.signature, signatureBytes);
+        assertEq(retrievedData.timestamp, timestamp);
+
+        // Test getting the randomness from a timestamp that is far from the set randomness timestamp
+        // In cases like this, our oracle is likely haven't been updated for a while, this tests that the binary search works
+        newTimestamp = timestamp + 2000000;
+
+        retrievedData = oracle.getRandomnessFromTimestamp(newTimestamp);
         assertEq(retrievedData.round, round);
         assertEq(retrievedData.randomness, randomnessBytes);
         assertEq(retrievedData.signature, signatureBytes);

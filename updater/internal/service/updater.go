@@ -224,7 +224,7 @@ func (u *Updater) processRound(
 		log.Info().
 			Uint64("latestOracleRound", u.latestOracleRound).
 			Uint64("round", round).
-			Msg("Skipping round, not caught up yet")
+			Msg("Skipping irrelevant round")
 		return nil
 	}
 

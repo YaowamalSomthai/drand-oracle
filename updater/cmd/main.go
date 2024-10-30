@@ -8,12 +8,14 @@ import (
 	"drand-oracle-updater/sender"
 	"drand-oracle-updater/signer"
 	"encoding/hex"
+	"os"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/crypto"
 
 	"github.com/drand/drand/client"
 	"github.com/drand/drand/client/http"
+	drandLog "github.com/drand/drand/log"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -41,6 +43,7 @@ func main() {
 	drandClient, err := client.New(
 		client.From(http.ForURLs(cfg.DrandURLs, chainHash)...),
 		client.WithChainHash(chainHash),
+		client.WithLogger(drandLog.NewLogger(os.Stdout, drandLog.LogError)), // Only log errors
 	)
 	if err != nil {
 		log.Fatal().Err(err).Msg("error creating client")

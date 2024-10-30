@@ -118,21 +118,39 @@ contract DrandOracle is IDrandOracle, Ownable2Step, Pausable, EIP712 {
     /// @notice Retrieves the complete randomness data for a specific timestamp
     /// @param _timestamp The timestamp to query
     /// @return The Random struct containing the timestamp's data
+    /// @dev Performs a binary search to find the randomness closest to, but not exceeding, the given timestamp
     /// @dev Reverts if no randomness data is found for the given timestamp
     function getRandomnessFromTimestamp(uint64 _timestamp) external view returns (Random memory) {
         if (_timestamp == 0 || _timestamp < _earliestRoundTimestamp) {
             revert InvalidRoundTimestamp();
         }
 
-        // Start from requested timestamp and search backwards
-        for (uint64 timestamp = _timestamp; timestamp >= _earliestRoundTimestamp; timestamp--) {
-            Random memory random = timestamps[timestamp];
+        // Binary search between earliest and latest timestamps
+        uint64 low = _earliestRoundTimestamp;
+        uint64 high = _timestamp + 1;
+
+        while (low < high - 1) {
+            uint64 mid = uint64((uint256(low) + uint256(high)) / 2);
+            Random memory random = timestamps[mid];
+
             if (random.round != 0) {
-                return random;
+                if (mid <= _timestamp) {
+                    low = mid;
+                } else {
+                    high = mid;
+                }
+            } else {
+                // If no randomness at mid, look in lower half
+                high = mid;
             }
         }
 
-        revert InvalidRoundTimestamp();
+        Random memory result = timestamps[low];
+        if (result.round == 0) {
+            revert InvalidRoundTimestamp();
+        }
+
+        return result;
     }
 
     /// @notice Returns the latest round number that has been recorded
