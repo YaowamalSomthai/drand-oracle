@@ -68,11 +68,3 @@ Go to the `updater` directory and run:
 ```bash
 make local-run-anvil
 ```
-
-## 📄 License
-
-MIT License.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.

@@ -1,14 +1,23 @@
-# Drand Oracle
+# 🎲 Drand Oracle
 
 A Solidity smart contract and updater service for bringing randomness from the [drand network](https://drand.love) on-chain.
 
-## Overview
+## 📄 Contract
 
-This project consists of two main components:
+The `DrandOracle` smart contract serves as an on-chain source of randomness by storing values from the drand network.
 
-1. A Solidity smart contract (`DrandOracle.sol`) that stores randomness values along with necessary metadatas and signatures to verify the randomness off chain.
-2. A Go updater service that fetches new randomness from drand and updates the contract.
+For more information, see the [contract README](contracts/README.md).
 
-## Contract
+## 🔄 Updater
 
-The randomness stored in the contract is verifiable off-chain but not on-chain. This is due to BLS signatures used by Drand network are not yet supported on EVM.
+The updater service fetches new randomness from drand and updates the `DrandOracle` contract with its managed signer and sender EOA addresses.
+
+For more information, see the [updater README](updater/README.md).
+
+## 📝 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to open an issue or submit a Pull Request.
