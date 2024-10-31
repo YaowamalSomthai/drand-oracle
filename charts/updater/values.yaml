@@ -1,0 +1,32 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/galxe/drand-oracle/drand-oracle-updater
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+config:
+  drandUrls: "https://api.drand.sh,https://drand.cloudflare.com"
+  chainHash: "8990e7a9aaed2ffed73dbd7092123d6f289930540d7651336225dc172e51b2ce"
+  drandOracleAddress: "0xF3C4a5FeEDA8eBd439f9C22DEF3f1a3Cb326540A"
+  rpc: "http://localhost:8545"
+  chainId: "31337"
+  genesisRound: "4496672"
+  setRandomnessGasLimit: "500000"
+
+useExistingSecrets: false
+existingSecretName: ""
+
+# Only used if useExistingSecrets is false
+secrets:
+  # Below example keys are from Anvil. Do not use them in production.
+  signerPrivateKey: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+  senderPrivateKey: "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"

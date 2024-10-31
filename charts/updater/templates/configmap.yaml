@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{include "updater.fullname" .}}
+  labels: {{- include "updater.labels" . | nindent 4}}
+data:
+  DRAND_URLS: "{{ .Values.config.drandUrls }}"
+  CHAIN_HASH: "{{ .Values.config.chainHash }}"
+  DRAND_ORACLE_ADDRESS: "{{ .Values.config.drandOracleAddress }}"
+  RPC: "{{ .Values.config.rpc }}"
+  CHAIN_ID: "{{ .Values.config.chainId }}"
+  SET_RANDOMNESS_GAS_LIMIT: "{{ .Values.config.setRandomnessGasLimit }}"
+  GENESIS_ROUND: "{{ .Values.config.genesisRound }}"

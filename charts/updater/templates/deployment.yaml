@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "updater.fullname" . }}
+  labels:
+    {{- include "updater.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "updater.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "updater.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "updater.fullname" . }}
+            - secretRef:
+                name: {{ if .Values.useExistingSecrets }}{{ .Values.existingSecretName }}{{ else }}{{ include "updater.fullname" . }}{{ end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}

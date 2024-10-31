@@ -1,0 +1,6 @@
+apiVersion: v2
+name: drand-oracle-updater
+description: A Helm chart for Kubernetes to deploy the Drand Oracle Updater application
+type: application
+version: 0.1.0
+appVersion: 0.1.0
