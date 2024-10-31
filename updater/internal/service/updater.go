@@ -21,10 +21,6 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-const (
-	setRandomnessGasLimit = 500000 // 500,000 should be more than enough for a setRandomness transaction
-)
-
 type Updater struct {
 	// drandClient is the Drand HTTP client
 	drandClient client.Client
@@ -34,6 +30,9 @@ type Updater struct {
 
 	// rpcClient is the Ethereum RPC client
 	rpcClient *ethclient.Client
+
+	// setRandomnessGasLimit is the gas limit for the setRandomness transaction
+	setRandomnessGasLimit uint64
 
 	// binding is the Drand Oracle contract binding
 	binding *binding.Binding
@@ -68,21 +67,23 @@ type roundData struct {
 func NewUpdater(
 	drandClient client.Client,
 	rpcClient *ethclient.Client,
+	setRandomnessGasLimit uint64,
 	binding *binding.Binding,
 	genesisRound uint64,
 	signer *signer.Signer,
 	sender *sender.Sender,
 ) (*Updater, error) {
 	return &Updater{
-		drandClient:       drandClient,
-		rpcClient:         rpcClient,
-		binding:           binding,
-		genesisRound:      genesisRound,
-		roundChan:         make(chan *roundData, 1),
-		latestOracleRound: 0,
-		latestDrandRound:  0,
-		signer:            signer,
-		sender:            sender,
+		drandClient:           drandClient,
+		rpcClient:             rpcClient,
+		setRandomnessGasLimit: setRandomnessGasLimit,
+		binding:               binding,
+		genesisRound:          genesisRound,
+		roundChan:             make(chan *roundData, 1),
+		latestOracleRound:     0,
+		latestDrandRound:      0,
+		signer:                signer,
+		sender:                sender,
 	}, nil
 }
 
@@ -254,7 +255,7 @@ func (u *Updater) processRound(
 		&bind.TransactOpts{
 			From:     u.sender.Address(),
 			Signer:   u.sender.SignerFn(),
-			GasLimit: setRandomnessGasLimit,
+			GasLimit: u.setRandomnessGasLimit,
 			GasPrice: gasPrice,
 		},
 		binding.IDrandOracleRandom{

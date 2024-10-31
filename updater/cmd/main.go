@@ -83,7 +83,7 @@ func main() {
 
 	// Initialize updater service
 	log.Info().Msg("Initializing updater service...")
-	updater, err := service.NewUpdater(drandClient, rpcClient, binding, cfg.GenesisRound, signer, sender)
+	updater, err := service.NewUpdater(drandClient, rpcClient, cfg.SetRandomnessGasLimit, binding, cfg.GenesisRound, signer, sender)
 	if err != nil {
 		log.Fatal().Err(err).Msg("error creating updater")
 	}

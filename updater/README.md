@@ -27,6 +27,7 @@ The updater requires the following environment variables:
 - `DRAND_ORACLE_ADDRESS`: The address of the Drand Oracle contract.
 - `RPC`: The RPC URL.
 - `CHAIN_ID`: The chain ID.
+- `SET_RANDOMNESS_GAS_LIMIT`: The gas limit for the setRandomness transaction.
 - `SIGNER_PRIVATE_KEY`: The private key of the signer.
 - `SENDER_PRIVATE_KEY`: The private key of the sender.
 - `GENESIS_ROUND`: The genesis round.
