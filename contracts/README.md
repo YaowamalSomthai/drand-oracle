@@ -60,3 +60,17 @@ anvil
 forge build
 make deploy-anvil
 ```
+
+### 🚀 Deploy
+
+Edit the `.env` file to set the correct environment variables for the chain you want to deploy to. Then run:
+
+```bash
+FOUNDRY_PROFILE=deploy forge script ./script/deploy/DrandOracle.s.sol:DrandOracleScript --broadcast --verify --verifier etherscan
+```
+
+Note that for some testnets, `--gas-estimate-multiplier x` is required to avoid out-of-gas errors.
+
+#### 🌍 Deployments
+
+- Gravity Alpha Testnet Sepolia - [0x64147A2414EeD1E28E3e8468094E619D09d5b7e9](https://explorer-sepolia.gravity.xyz/address/0x64147A2414EeD1E28E3e8468094E619D09d5b7e9)

@@ -35,11 +35,9 @@ clean-go:
 
 # Deploy anvil using default anvil private key
 deploy-anvil:
-	export PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 \
-		OWNER=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 \
-		SIGNER=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 \
-		CHAIN_HASH=0x8990e7a9aaed2ffed73dbd7092123d6f289930540d7651336225dc172e51b2ce && \
-	forge script ./script/deploy/DrandOracle.s.sol:DrandOracleScript \
-		--rpc-url 127.0.0.1:8545 \
-		--broadcast \
-		--verify
+	PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 \
+	OWNER=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 \
+	SIGNER=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 \
+	CHAIN_HASH=0x8990e7a9aaed2ffed73dbd7092123d6f289930540d7651336225dc172e51b2ce \
+	CHAIN=anvil \
+	forge script ./script/deploy/DrandOracle.s.sol:DrandOracleScript --private-key $(PRIVATE_KEY) --broadcast

@@ -5,6 +5,12 @@ libs = ["lib"]
 
 remappings = ["@openzeppelin/=lib/openzeppelin-contracts/"]
 
+[rpc_endpoints]
+gravity = "${RPC_GRAVITY}"
+gravity_sepolia = "${RPC_GRAVITY_SEPOLIA}"
+anvil = "http://127.0.0.1:8545"
+
 [etherscan]
-gravity_testnet = { key = "", chain = "13505", url = "https://explorer-sepolia.gravity.xyz/api" }
+gravity = { key = "${ETHERSCAN_API_KEY_GRAVITY}", chain = "1625", url = "${ETHERSCAN_API_URL_GRAVITY}" }
+gravity_sepolia = { key = "${ETHERSCAN_API_KEY_GRAVITY_SEPOLIA}", chain = "13505", url = "${ETHERSCAN_API_URL_GRAVITY_SEPOLIA}" }
 anvil = { key = "", chain = "31337", url = "http://127.0.0.1:8545" }
