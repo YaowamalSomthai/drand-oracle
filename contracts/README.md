@@ -73,4 +73,4 @@ Note that for some testnets, `--gas-estimate-multiplier x` is required to avoid 
 
 #### 🌍 Deployments
 
-- Gravity Alpha Testnet Sepolia - [0x64147A2414EeD1E28E3e8468094E619D09d5b7e9](https://explorer-sepolia.gravity.xyz/address/0x64147A2414EeD1E28E3e8468094E619D09d5b7e9)
+- Gravity Alpha Testnet Sepolia - [0x8d180A75fAc0De59BB1e833fc3838EE026a53aC5](https://explorer-sepolia.gravity.xyz/address/0x8d180A75fAc0De59BB1e833fc3838EE026a53aC5)

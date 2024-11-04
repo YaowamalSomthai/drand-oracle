@@ -7,7 +7,7 @@ import {DrandOracle} from "../../src/DrandOracle.sol";
 
 contract DrandOracleScript is BaseScript {
     function run() external chain broadcaster {
-        bytes32 CREATE2_SALT = vm.envBytes32("CREATE2_SALT");
+        // bytes32 CREATE2_SALT = vm.envBytes32("CREATE2_SALT");
         address owner = vm.envAddress("OWNER");
         address signer = vm.envAddress("SIGNER");
         bytes32 chainHash = vm.envBytes32("CHAIN_HASH");
@@ -17,7 +17,7 @@ contract DrandOracleScript is BaseScript {
         console.log("Chain hash:");
         console.logBytes32(chainHash);
 
-        DrandOracle oracle = new DrandOracle{salt: CREATE2_SALT}(owner, signer, chainHash);
+        DrandOracle oracle = new DrandOracle(owner, signer, chainHash);
         console.log("DrandOracle deployed at:", address(oracle));
     }
 }
